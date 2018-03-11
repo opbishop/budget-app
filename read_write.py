@@ -2,6 +2,7 @@ import os
 import json
 import pandas as pd
 from config import config
+from pprint import pprint
 
 
 def save_to_json(obj, fp):
@@ -27,7 +28,7 @@ def read_statements():
 
 
 def save_to_csv(obj, fp):
-    obj.to_csv('data/{}.csv'.format(fp), sep='\t')
+    obj.to_csv('data/{}.csv'.format(fp))
 
 
 def read_csv(fp):

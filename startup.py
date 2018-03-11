@@ -1,16 +1,9 @@
-import pandas as pd
-import read_write
+import read_write as rw
 import data_processor
 
-df = read_write.read_statements()
+df = rw.read_statements()
+categories = data_processor.enrich_categories(df)
+
+df['Category'] = [categories[x] for x in [e.split()[0] for e in df['Description']]]
+
 print(df.tail())
-
-x = set(df['Description'])
-y = [set(str.split()[0] for str in df['Description'])]
-df1 = pd.Series(y)
-
-data_processor.enrich_categories(df1)
-
-cats = read_write.read_json('categorised')
-
-print(cats)
