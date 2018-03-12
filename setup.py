@@ -2,8 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, REAL
+import config
 
-engine = create_engine('sqlite:///foo.db', echo=True)
+engine = create_engine('sqlite:///{}'.format(config.database), echo=True)
 
 Base = declarative_base()
 
@@ -23,10 +24,8 @@ class Transaction(Base):
                                                                                                self.amount,
                                                                                                self.category)
 
-Base.metadata.create_all(engine)
+def build_database():
+    Base.metadata.create_all(engine)
 
-# valueerror for incorrect type entered
-# sqlite3.operationalerror for table not found
-
-Session = sessionmaker(bind=engine)
-session = Session()
+    Session = sessionmaker(bind=engine)
+    session = Session()
